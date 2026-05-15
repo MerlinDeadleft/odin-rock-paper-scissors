@@ -23,10 +23,6 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    return prompt("Please enter one of the following: 'rock', 'paper', 'scissors'");
-}
-
 function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
 
@@ -51,42 +47,6 @@ function playRound(humanChoice, computerChoice) {
                     : 0;
     }
 }
-
-// function playGame() {
-//     let humanScore = 0;
-//     let computerScore = 0;
-
-//     for(let i = 0; i < 5; i++)
-//     {
-//         const humanChoice = getHumanChoice();
-//         const computerChoice = getComputerChoice();
-        
-//         const roundResult = playRound(humanChoice, computerChoice);
-        
-//         switch(roundResult) {
-//             case -1:
-//                 console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nYou lose!`);
-//                 computerScore++;
-//                 break;
-//             case 0:
-//                 console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nTie!`);
-//                 break;
-//             case 1:
-//                 console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nYou win!`);
-//                 humanScore++;
-//                 break;
-//         }
-//     }
-
-//     const gameResult = humanScore > computerScore
-//         ? "You win!"
-//         : humanScore < computerScore
-//             ? "You lose!"
-//             : "Tie!";
-//     console.log(`Final Score:\n\tYou:\t\t${humanScore}\n\tComputer:\t${computerScore}\n${gameResult}`);
-// }
-
-// playGame();
 
 function handleChoiceButtonClicked(choice) {
     const computerChoice = getComputerChoice();
