@@ -1,3 +1,15 @@
+let humanScore = 0;
+let computerScore = 0;
+
+const rockBtn = document.querySelector("#rock-btn");
+const paperBtn = document.querySelector("#paper-btn");
+const scissorsBtn = document.querySelector("#scissors-btn");
+const logsDiv = document.querySelector("#logs");
+
+rockBtn.addEventListener("click", () => handleChoiceButtonClicked("rock"));
+paperBtn.addEventListener("click", () => handleChoiceButtonClicked("paper"));
+scissorsBtn.addEventListener("click", () => handleChoiceButtonClicked("scissors"));
+
 function getComputerChoice() {
     let randomNumber = Math.floor(Math.random() * 3);
 
@@ -40,38 +52,90 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+// function playGame() {
+//     let humanScore = 0;
+//     let computerScore = 0;
 
-    for(let i = 0; i < 5; i++)
-    {
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
+//     for(let i = 0; i < 5; i++)
+//     {
+//         const humanChoice = getHumanChoice();
+//         const computerChoice = getComputerChoice();
         
-        const roundResult = playRound(humanChoice, computerChoice);
+//         const roundResult = playRound(humanChoice, computerChoice);
         
-        switch(roundResult) {
-            case -1:
-                console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nYou lose!`);
-                computerScore++;
-                break;
-            case 0:
-                console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nTie!`);
-                break;
-            case 1:
-                console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nYou win!`);
-                humanScore++;
-                break;
-        }
+//         switch(roundResult) {
+//             case -1:
+//                 console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nYou lose!`);
+//                 computerScore++;
+//                 break;
+//             case 0:
+//                 console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nTie!`);
+//                 break;
+//             case 1:
+//                 console.log(`You chose: ${humanChoice}. Computer chose: ${computerChoice}.\nYou win!`);
+//                 humanScore++;
+//                 break;
+//         }
+//     }
+
+//     const gameResult = humanScore > computerScore
+//         ? "You win!"
+//         : humanScore < computerScore
+//             ? "You lose!"
+//             : "Tie!";
+//     console.log(`Final Score:\n\tYou:\t\t${humanScore}\n\tComputer:\t${computerScore}\n${gameResult}`);
+// }
+
+// playGame();
+
+function handleChoiceButtonClicked(choice) {
+    const computerChoice = getComputerChoice();
+    const roundResult = playRound(choice, computerChoice);
+        
+    switch(roundResult) {
+        case -1:
+            log(`You chose: ${choice}. Computer chose: ${computerChoice}.\nYou lose!`);
+            computerScore++;
+            break;
+        case 0:
+            log(`You chose: ${choice}. Computer chose: ${computerChoice}.\nTie!`);
+            break;
+        case 1:
+            log(`You chose: ${choice}. Computer chose: ${computerChoice}.\nYou win!`);
+            humanScore++;
+            break;
     }
 
-    const gameResult = humanScore > computerScore
+    if(humanScore === 5 || computerScore === 5)
+    {
+        const gameResult = humanScore > computerScore
         ? "You win!"
         : humanScore < computerScore
-            ? "You lose!"
-            : "Tie!";
-    console.log(`Final Score:\n\tYou:\t\t${humanScore}\n\tComputer:\t${computerScore}\n${gameResult}`);
+        ? "You lose!"
+        : "Tie!";
+        log(`Final Score:\n\tYou:\t\t${humanScore}\n\tComputer:\t${computerScore}\n${gameResult}`);
+        log("-".repeat(30));
+        humanScore = 0;
+        computerScore = 0;
+
+        rockBtn.toggleAttribute("disabled");
+        paperBtn.toggleAttribute("disabled");
+        scissorsBtn.toggleAttribute("disabled");
+
+        const playAgainButton = document.createElement("button");
+        playAgainButton.textContent = "Play Again";
+        playAgainButton.addEventListener("click", () =>{
+            rockBtn.toggleAttribute("disabled");
+            paperBtn.toggleAttribute("disabled");
+            scissorsBtn.toggleAttribute("disabled");
+            logsDiv.replaceChildren();
+        })
+        logsDiv.appendChild(playAgainButton);
+    }
 }
 
-playGame();
+function log(message) {
+    const p = document.createElement("p");
+    p.textContent = message;
+    logsDiv.appendChild(p);
+}
